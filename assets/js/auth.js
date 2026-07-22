@@ -33,11 +33,11 @@ async function getCurrentProfile() {
  * Cria uma conta nova (leitor ou escritor) e já entra com ela.
  * role: 'LEITOR' | 'ESCRITOR'
  */
-async function registerUser({ nome, email, senha, role = 'LEITOR' }) {
+async function registerUser({ nome, email, senha, telefone = '', role = 'LEITOR' }) {
   const { data, error } = await supabaseClient.auth.signUp({
     email,
     password: senha,
-    options: { data: { nome, role } },
+    options: { data: { nome, telefone, role } },
   });
   if (error) throw new Error(traduzErroAuth(error));
   return data;

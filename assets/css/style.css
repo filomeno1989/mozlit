@@ -115,10 +115,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   margin: 0 auto;
   padding: 0 1rem;
 }
-.container-sm  { max-width: 32rem; }  /* login/registo/carteira: max-w-md/lg */
-.container-md  { max-width: 42rem; } /* leitor: max-w-2xl */
-.container-lg  { max-width: 56rem; } /* detalhe do livro: max-w-4xl */
-.container-xl  { max-width: 64rem; } /* painel do autor: max-w-5xl */
+.container-sm  { width: 100%; max-width: 32rem; margin: 0 auto; padding: 0 1rem; }  /* login/registo/carteira: max-w-md/lg */
+.container-md  { width: 100%; max-width: 42rem; margin: 0 auto; padding: 0 1rem; } /* leitor: max-w-2xl */
+.container-lg  { width: 100%; max-width: 56rem; margin: 0 auto; padding: 0 1rem; } /* detalhe do livro: max-w-4xl */
+.container-xl  { width: 100%; max-width: 64rem; margin: 0 auto; padding: 0 1rem; } /* painel do autor: max-w-5xl */
 
 /* ---------------------------------------------------------------------
    3. CABEÇALHO (header) — sticky, com blur, igual ao AppShell original

@@ -15,6 +15,20 @@ Este site já está pronto e configurado para o seu projeto Supabase. Siga estes
 
 > Se aparecer algum erro, tire um print e me envie que eu ajudo a corrigir.
 
+### Passo 1.1 — Migrações (atualizações do banco depois do Passo 1)
+
+Sempre que eu adicionar uma nova funcionalidade que precise de mudanças no banco, vou colocar um arquivo novo na pasta `migrations/`. Basta abrir cada um (na ordem do número, ex: `002-...`, depois `003-...`) e rodar no SQL Editor, do mesmo jeito que o `supabase-schema.sql`. É seguro rodar mesmo com dados existentes.
+
+### Passo 1.2 — Tornar-se Administrador
+
+O arquivo `migrations/002-telefone-e-admin.sql` já traz o comando pronto — é só trocar o email pelo seu e rodar:
+
+```sql
+update public.profiles
+set role = 'ADMIN'
+where email = 'seu-email-aqui@exemplo.com';
+```
+
 ## Passo 2 — Confirmar o login por email
 
 Por padrão o Supabase pode pedir confirmação por email antes do usuário conseguir entrar. Para testar mais rápido:

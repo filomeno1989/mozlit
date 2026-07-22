@@ -25,8 +25,8 @@
           <div class="field-error hidden" id="register-error"></div>
 
           <div class="field">
-            <label for="nome">Nome Completo</label>
-            <input type="text" id="nome" placeholder="Seu nome" required>
+            <label for="nome">Como devemos chamar-te?</label>
+            <input type="text" id="nome" placeholder="Seu nome completo" required>
           </div>
 
           <div class="field">
@@ -35,23 +35,32 @@
           </div>
 
           <div class="field">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+            <label for="telefone">Contacto Telefónico (opcional p/ M-Pesa)</label>
+            <input type="text" id="telefone" placeholder="84 228 0793" inputmode="tel">
           </div>
 
           <div class="field">
-            <label>Quero me registar como</label>
-            <div class="pill-group">
-              <button type="button" class="pill is-active" data-role="LEITOR" id="role-leitor">Leitor</button>
-              <button type="button" class="pill" data-role="ESCRITOR" id="role-escritor">Escritor</button>
-            </div>
-            <p class="field-hint">Escritores podem publicar e vender as suas obras.</p>
+            <label for="perfil">Perfil</label>
+            <select id="perfil">
+              <option value="LEITOR">Leitor: Quero descobrir e ler obras</option>
+              <option value="ESCRITOR">Escritor: Quero publicar e vender as minhas obras</option>
+            </select>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block" id="register-submit">Criar Conta</button>
+          <div class="field">
+            <label for="senha">Senha (mín. 6 caracteres)</label>
+            <input type="password" id="senha" placeholder="••••••••" required minlength="6">
+          </div>
+
+          <div class="field">
+            <label for="senha_confirmar">Confirmar Senha</label>
+            <input type="password" id="senha_confirmar" placeholder="••••••••" required minlength="6">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="register-submit">Começar a Ler</button>
 
           <p class="text-center text-muted mt-4" style="font-size:.875rem;">
-            Já tem conta? <a href="login.html" class="btn-link" style="font-weight:500;">Entrar</a>
+            Já fazes parte da família? <a href="login.html" class="btn-link" style="font-weight:500;">Entrar</a>
           </p>
         </form>
       </div>
@@ -65,22 +74,12 @@
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/app.js"></script>
   <script>
-    let selectedRole = 'LEITOR';
-
     document.addEventListener('DOMContentLoaded', async () => {
       await initHeader('register');
       initFooter();
 
       const session = await getSession();
       if (session) window.location.href = 'index.html';
-
-      document.querySelectorAll('[data-role]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          selectedRole = btn.dataset.role;
-          document.querySelectorAll('[data-role]').forEach((b) => b.classList.remove('is-active'));
-          btn.classList.add('is-active');
-        });
-      });
     });
 
     document.getElementById('register-form').addEventListener('submit', async (e) => {
@@ -88,6 +87,16 @@
       const errorBox = document.getElementById('register-error');
       const submitBtn = document.getElementById('register-submit');
       errorBox.classList.add('hidden');
+
+      const senha = document.getElementById('senha').value;
+      const senhaConfirmar = document.getElementById('senha_confirmar').value;
+
+      if (senha !== senhaConfirmar) {
+        errorBox.textContent = 'As senhas não coincidem.';
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
       submitBtn.disabled = true;
       submitBtn.textContent = 'Criando conta...';
 
@@ -95,17 +104,16 @@
         await registerUser({
           nome: document.getElementById('nome').value,
           email: document.getElementById('email').value,
-          senha: document.getElementById('senha').value,
-          role: selectedRole,
+          telefone: document.getElementById('telefone').value,
+          senha,
+          role: document.getElementById('perfil').value,
         });
-        // Se a confirmação de email estiver ativada no Supabase, avisamos o usuário.
-        alert('Conta criada! Se pedirmos confirmação por email, verifique a sua caixa de entrada antes de entrar.');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
       } catch (err) {
         errorBox.textContent = err.message;
         errorBox.classList.remove('hidden');
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Criar Conta';
+        submitBtn.textContent = 'Começar a Ler';
       }
     });
   </script>
