@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MozLit — Plataforma Literária Moçambicana</title>
+  <meta name="description" content="Descubra, leia e publique literatura moçambicana.">
+  <link rel="icon" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ===================== CABEÇALHO (gerado por app.js) ===================== -->
+  <header class="site-header" id="site-header"></header>
+
+  <!-- ===================== CONTEÚDO DA PÁGINA ===================== -->
+  <main class="container py-8">
+
+    <!-- Hero / destaque -->
+    <section class="hero">
+      <h1>Descubra Literatura Moçambicana</h1>
+      <p>Uma plataforma dedicada a escritores e leitores de Moçambique. Publique, leia e monetize suas obras.</p>
+    </section>
+
+    <!-- Filtro de categorias -->
+    <section class="section">
+      <div class="pill-group" id="category-filters" style="justify-content:center;">
+        <!-- preenchido via JS: home.js -->
+      </div>
+    </section>
+
+    <!-- Grade de livros -->
+    <section>
+      <div class="flex-between mb-4">
+        <h2 id="section-title" style="font-size:1.25rem; font-weight:700;">Todos os Livros</h2>
+        <span class="text-muted" id="book-count" style="font-size:.875rem;"></span>
+      </div>
+
+      <div class="book-grid" id="book-grid">
+        <!-- preenchido via JS: home.js -->
+      </div>
+
+      <div class="empty-state hidden" id="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <p>Nenhum livro encontrado nesta categoria.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,605 @@
+/* =====================================================================
+   MOZLIT — FOLHA DE ESTILO GLOBAL
+   Reúne TODAS as cores, fontes, espaçamentos e componentes do site.
+   Editar aqui muda a aparência em TODAS as páginas de uma vez.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. VARIÁVEIS DE DESIGN (tokens) — copiadas do globals.css original.
+   Modo claro em :root, modo escuro em [data-theme="dark"].
+   --------------------------------------------------------------------- */
+:root {
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #1a1a1a;
+  --primary-foreground: #fafafa;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #1a1a1a;
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #a3a3a3;
+
+  /* Cor de marca MozLit: âmbar/dourado (tema literário moçambicano) */
+  --amber-50: #fffbeb;
+  --amber-100: #fef3c7;
+  --amber-200: #fde68a;
+  --amber-600: #d97706;
+  --amber-700: #b45309;
+  --amber-800: #92400e;
+  --amber-900: #78350f;
+  --orange-50: #fff7ed;
+
+  --emerald-50: #ecfdf5;
+  --emerald-100: #d1fae5;
+  --emerald-600: #059669;
+  --emerald-700: #047857;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --max-width: 1280px; /* equivalente ao max-w-7xl do Tailwind */
+}
+
+[data-theme="dark"] {
+  --background: #171717;
+  --foreground: #fafafa;
+  --card: #262626;
+  --card-foreground: #fafafa;
+  --popover: #262626;
+  --popover-foreground: #fafafa;
+  --primary: #e5e5e5;
+  --primary-foreground: #262626;
+  --secondary: #404040;
+  --secondary-foreground: #fafafa;
+  --muted: #404040;
+  --muted-foreground: #a3a3a3;
+  --accent: #404040;
+  --accent-foreground: #fafafa;
+  --destructive: #f2555a;
+  --border: rgba(255,255,255,0.1);
+  --input: rgba(255,255,255,0.15);
+  --ring: #737373;
+
+  --amber-50: rgba(120,53,15,0.3);
+  --amber-100: rgba(146,64,14,0.3);
+  --amber-900: #fde68a;
+
+  --emerald-50: rgba(6,95,70,0.2);
+  --emerald-100: rgba(6,95,70,0.3);
+}
+
+/* ---------------------------------------------------------------------
+   2. RESET E BASE
+   --------------------------------------------------------------------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+input, textarea, select { font-family: inherit; font-size: inherit; }
+
+/* Container central usado em todas as páginas (= max-w-7xl mx-auto px-4) */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.container-sm  { max-width: 32rem; }  /* login/registo/carteira: max-w-md/lg */
+.container-md  { max-width: 42rem; } /* leitor: max-w-2xl */
+.container-lg  { max-width: 56rem; } /* detalhe do livro: max-w-4xl */
+.container-xl  { max-width: 64rem; } /* painel do autor: max-w-5xl */
+
+/* ---------------------------------------------------------------------
+   3. CABEÇALHO (header) — sticky, com blur, igual ao AppShell original
+   --------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  background-color: color-mix(in srgb, var(--background) 95%, transparent);
+  backdrop-filter: blur(8px);
+}
+.site-header__bar {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  background: none;
+  border: none;
+  color: var(--foreground);
+}
+.brand svg { color: var(--amber-600); width: 20px; height: 20px; }
+.brand__text { display: none; }
+@media (min-width: 640px) { .brand__text { display: inline; } }
+
+.main-nav {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 1.5rem;
+}
+@media (min-width: 768px) { .main-nav { display: flex; } }
+
+.nav-link {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  background: none;
+  border: none;
+  transition: background-color .15s, color .15s;
+}
+.nav-link:hover { color: var(--foreground); background-color: var(--accent); }
+.nav-link.is-active {
+  background-color: var(--amber-100);
+  color: var(--amber-900);
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--foreground);
+  transition: background-color .15s;
+}
+.icon-btn:hover { background-color: var(--accent); }
+
+.menu-toggle { display: inline-flex; }
+@media (min-width: 768px) { .menu-toggle { display: none; } }
+
+/* Menu lateral (mobile) */
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+}
+.mobile-drawer.is-open { display: block; }
+.mobile-drawer__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.4);
+}
+.mobile-drawer__panel {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 16rem;
+  background: var(--background);
+  padding: 1rem;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+}
+.mobile-drawer__title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1.125rem; font-weight: 700; margin-bottom: 1.5rem;
+}
+.mobile-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+.mobile-nav .nav-link { text-align: left; width: 100%; justify-content: flex-start; display: flex; align-items: center; gap: 0.75rem; padding: 0.625rem 0.75rem; }
+
+/* ---------------------------------------------------------------------
+   4. RODAPÉ (footer)
+   --------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  margin-top: auto;
+}
+.site-footer .container { text-align: center; font-size: 0.875rem; color: var(--muted-foreground); }
+.site-footer p + p { margin-top: 0.25rem; }
+
+/* ---------------------------------------------------------------------
+   5. BOTÕES
+   --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  transition: background-color .15s, border-color .15s, color .15s, opacity .15s;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn-sm { padding: 0.25rem 0.625rem; font-size: 0.8125rem; }
+.btn-icon { width: 2.25rem; height: 2.25rem; padding: 0; }
+.btn-block { width: 100%; }
+
+.btn-primary {
+  background-color: var(--amber-600);
+  color: #ffffff;
+}
+.btn-primary:hover:not(:disabled) { background-color: var(--amber-700); }
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border);
+  color: var(--foreground);
+}
+.btn-outline:hover:not(:disabled) { background-color: var(--accent); }
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--foreground);
+}
+.btn-ghost:hover:not(:disabled) { background-color: var(--accent); }
+
+.btn-link {
+  background: none; color: var(--amber-700); padding: 0;
+}
+.btn-link:hover { text-decoration: underline; }
+
+.btn-danger-ghost { background: none; color: var(--destructive); }
+.btn-danger-ghost:hover { background-color: var(--accent); }
+
+/* ---------------------------------------------------------------------
+   6. CARTÕES (cards)
+   --------------------------------------------------------------------- */
+.card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.card-soft { border-color: color-mix(in srgb, var(--border) 50%, transparent); }
+.card__header { padding: 1.25rem 1.25rem 0; }
+.card__title { font-size: 1.125rem; font-weight: 700; }
+.card__description { font-size: 0.875rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+.card__content { padding: 1.25rem; }
+
+/* Cartão de livro (grid da home / biblioteca) */
+.book-card {
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.book-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+.book-card__cover {
+  aspect-ratio: 3/4;
+  background-color: var(--muted);
+  position: relative;
+  overflow: hidden;
+}
+.book-card__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+.book-card:hover .book-card__cover img { transform: scale(1.05); }
+.book-card__placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1rem; text-align: center;
+  background: linear-gradient(to bottom, rgba(146,64,14,.2), rgba(180,83,9,.1), transparent);
+}
+.book-card__placeholder svg { width: 2.5rem; height: 2.5rem; color: rgba(180,83,9,.6); margin-bottom: .75rem; }
+.book-card__badge-cat {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+}
+.book-card__badge-price {
+  position: absolute; bottom: 0.5rem; left: 0.5rem;
+  padding: 0.125rem 0.5rem; border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.6); color: #fff; font-size: 0.75rem; font-weight: 500;
+}
+.book-card__body { padding: 0.75rem; }
+.book-card__title { font-weight: 600; font-size: 0.875rem; margin-bottom: 0.125rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.book-card__author { font-size: 0.75rem; color: var(--muted-foreground); }
+.book-card__synopsis {
+  font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.25rem;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 640px)  { .book-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px)  { .book-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1024px) { .book-grid { grid-template-columns: repeat(5, 1fr); } }
+
+/* ---------------------------------------------------------------------
+   7. BADGES / ETIQUETAS
+   --------------------------------------------------------------------- */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 500;
+  border: 1px solid transparent;
+}
+.badge-amber   { background-color: var(--amber-600); color: #fff; }
+.badge-amber-soft { background-color: var(--amber-100); color: var(--amber-800); }
+.badge-emerald { background-color: var(--emerald-600); color: #fff; }
+.badge-emerald-soft { background-color: var(--emerald-100); color: var(--emerald-700); }
+.badge-muted   { background-color: var(--muted); color: var(--muted-foreground); }
+.badge-outline { background: transparent; border-color: var(--border); color: var(--foreground); }
+
+/* ---------------------------------------------------------------------
+   8. FORMULÁRIOS
+   --------------------------------------------------------------------- */
+.field { margin-bottom: 1rem; }
+.field label {
+  display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem;
+}
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="number"],
+.field input[type="url"],
+.field textarea,
+.field select {
+  width: 100%;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 25%, transparent);
+}
+.field textarea { resize: vertical; min-height: 5rem; }
+.field-hint { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+.field-error {
+  padding: 0.75rem; border-radius: var(--radius-md);
+  background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
+  color: var(--destructive);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.pill-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pill {
+  padding: 0.375rem 1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color .15s, color .15s, border-color .15s;
+}
+.pill:hover { background-color: var(--accent); }
+.pill.is-active { background-color: var(--amber-600); border-color: var(--amber-600); color: #fff; }
+.pill-cat { background-color: var(--muted); color: var(--muted-foreground); border-color: transparent; }
+.pill-cat.is-active { background-color: var(--amber-600); color: #fff; }
+
+/* ---------------------------------------------------------------------
+   9. AUTENTICAÇÃO (login / registo)
+   --------------------------------------------------------------------- */
+.auth-page { padding: 4rem 1rem; }
+.auth-card__icon {
+  width: fit-content; margin: 0 auto 0.75rem;
+  padding: 0.625rem; border-radius: var(--radius-xl);
+  background-color: var(--amber-100);
+}
+.auth-card__icon svg { width: 1.5rem; height: 1.5rem; color: var(--amber-700); }
+.auth-card__header { text-align: center; }
+
+/* ---------------------------------------------------------------------
+   10. HERO (destaque da página inicial)
+   --------------------------------------------------------------------- */
+.hero {
+  margin-bottom: 2.5rem;
+  text-align: center;
+  padding: 3rem 1rem;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(to bottom right, var(--amber-50), var(--orange-50));
+  border: 1px solid color-mix(in srgb, var(--amber-200) 50%, transparent);
+}
+.hero h1 { font-size: 1.875rem; font-weight: 700; color: var(--amber-900); margin-bottom: 0.75rem; }
+.hero p { color: var(--muted-foreground); max-width: 36rem; margin: 0 auto; font-size: 0.9375rem; }
+@media (min-width: 640px) { .hero h1 { font-size: 2.25rem; } }
+
+/* ---------------------------------------------------------------------
+   11. ESTADOS VAZIOS / CARREGAMENTO
+   --------------------------------------------------------------------- */
+.empty-state { text-align: center; padding: 4rem 1rem; }
+.empty-state svg { width: 3rem; height: 3rem; color: color-mix(in srgb, var(--muted-foreground) 40%, transparent); margin: 0 auto 1rem; }
+.empty-state p { color: var(--muted-foreground); }
+
+.skeleton {
+  background-color: var(--muted);
+  border-radius: var(--radius-md);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+
+/* ---------------------------------------------------------------------
+   12. LEITOR (E-READER) — anti-cópia + marca d'água
+   --------------------------------------------------------------------- */
+.reader-topbar {
+  position: sticky; top: 3.5rem; z-index: 30;
+  background-color: color-mix(in srgb, var(--background) 95%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.reader-topbar__bar {
+  max-width: 42rem; margin: 0 auto; padding: 0 1rem;
+  height: 3rem; display: flex; align-items: center; justify-content: space-between;
+}
+.reader-article {
+  max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.5rem;
+  user-select: none; -webkit-user-select: none;
+}
+.reader-article header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent); }
+.reader-article h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+@media (min-width: 640px) { .reader-article h1 { font-size: 1.875rem; } }
+.reader-article .chapter-meta { font-size: 0.875rem; color: var(--muted-foreground); }
+.reader-content p { margin-bottom: 1.25rem; line-height: 1.85; font-size: 1.05rem; }
+.reader-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 700; }
+.reader-content h3 { margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.125rem; font-weight: 600; }
+.reader-content blockquote { border-left: 2px solid var(--amber-600); padding-left: 1rem; font-style: italic; margin-bottom: 1.25rem; }
+
+.watermark-overlay {
+  position: fixed; inset: 0; z-index: 40;
+  pointer-events: none; overflow: hidden;
+}
+.watermark-overlay span {
+  position: absolute;
+  color: color-mix(in srgb, var(--foreground) 3%, transparent);
+  font-weight: 600; white-space: nowrap;
+  transform: rotate(-35deg);
+  font-size: 1rem;
+  user-select: none;
+}
+
+.ereader-protected, .ereader-protected * {
+  -webkit-user-select: none; -moz-user-select: none; user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ---------------------------------------------------------------------
+   13. COMENTÁRIOS
+   --------------------------------------------------------------------- */
+.comments-section { max-width: 42rem; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+.comments-section__divider { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 1rem; }
+.comments-section__title { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 1.125rem; font-weight: 600; }
+
+.comment-form { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+.avatar-circle {
+  flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 600;
+  background-color: var(--amber-100); color: var(--amber-800);
+}
+
+.comment-item { padding: 1rem 0; border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent); display: flex; gap: 0.75rem; }
+.comment-item:last-child { border-bottom: none; }
+.comment-item__name { font-weight: 500; font-size: 0.875rem; }
+.comment-item__text { font-size: 0.875rem; margin-top: 0.25rem; line-height: 1.6; white-space: pre-wrap; }
+.comment-item__actions { display: flex; gap: 0.25rem; margin-top: 0.5rem; }
+.comment-item__actions button {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  font-size: 0.75rem; color: var(--muted-foreground); background: none; border: none;
+  padding: 0.125rem 0.375rem; border-radius: var(--radius-sm);
+}
+.comment-item__actions button:hover { background-color: var(--accent); color: var(--foreground); }
+.comment-replies { margin-left: 2.75rem; border-left: 2px solid color-mix(in srgb, var(--border) 30%, transparent); padding-left: 1rem; }
+
+/* ---------------------------------------------------------------------
+   14. CARTEIRA
+   --------------------------------------------------------------------- */
+.balance-card {
+  background: linear-gradient(to bottom right, var(--amber-50), var(--orange-50));
+  border-color: color-mix(in srgb, var(--amber-200) 50%, transparent);
+  text-align: center; padding: 1.5rem;
+}
+.balance-card svg { width: 2rem; height: 2rem; color: var(--amber-700); margin: 0 auto 0.5rem; }
+.balance-card__value { font-size: 1.875rem; font-weight: 700; color: var(--amber-900); margin-top: 0.25rem; }
+
+/* ---------------------------------------------------------------------
+   15. PAINEL DO AUTOR
+   --------------------------------------------------------------------- */
+.stat-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(3, 1fr); } }
+.stat-card { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; }
+.stat-card__icon { padding: 0.5rem; border-radius: var(--radius-md); }
+.stat-card__icon svg { width: 1.25rem; height: 1.25rem; }
+.stat-card__label { font-size: 0.75rem; color: var(--muted-foreground); }
+.stat-card__value { font-size: 1.25rem; font-weight: 700; }
+
+.book-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem; border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  border-radius: var(--radius-md); gap: 0.5rem; flex-wrap: wrap;
+}
+.book-row__cover { width: 2.5rem; height: 3.5rem; border-radius: var(--radius-sm); object-fit: cover; flex-shrink: 0; }
+
+/* ---------------------------------------------------------------------
+   16. MODAIS (dialogs) — usados no painel do autor
+   --------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 70;
+  background: rgba(0,0,0,0.5);
+  display: none; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.is-open { display: flex; }
+.modal-box {
+  background-color: var(--card); color: var(--card-foreground);
+  border-radius: var(--radius-lg);
+  max-width: 32rem; width: 100%;
+  max-height: 85vh; overflow-y: auto;
+  padding: 1.5rem;
+}
+.modal-box h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; }
+
+/* ---------------------------------------------------------------------
+   17. UTILITÁRIOS
+   --------------------------------------------------------------------- */
+.text-muted { color: var(--muted-foreground); }
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.25rem; } .mt-2 { margin-top: 0.5rem; } .mt-4 { margin-top: 1rem; } .mt-6 { margin-top: 1.5rem; }
+.mb-2 { margin-bottom: 0.5rem; } .mb-4 { margin-bottom: 1rem; } .mb-6 { margin-bottom: 1.5rem; } .mb-8 { margin-bottom: 2rem; }
+.flex { display: flex; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.gap-2 { gap: 0.5rem; } .gap-3 { gap: 0.75rem; } .gap-4 { gap: 1rem; }
+.hidden { display: none !important; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+.section { margin-bottom: 2rem; }
+.fade-in { animation: fadeIn .2s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Scrollbar customizada no leitor */
+.reader-article::-webkit-scrollbar { width: 4px; }
+.reader-article::-webkit-scrollbar-thumb { background: rgba(120,120,120,.3); border-radius: 2px; }

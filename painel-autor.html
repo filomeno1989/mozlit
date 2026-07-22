@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Autor — MozLit</title>
+  <link rel="icon" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header" id="site-header"></header>
+
+  <main class="container-xl py-8">
+    <div class="flex-between mb-8" style="flex-wrap:wrap; gap:1rem;">
+      <div>
+        <h1 style="font-size:1.5rem; font-weight:700;">Painel do Autor</h1>
+        <p class="text-muted" style="font-size:.875rem;">Gerencie suas obras e acompanhe seus ganhos</p>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn btn-outline btn-sm" id="open-profile-btn">Meu Perfil</button>
+        <a href="novo-livro.html" class="btn btn-primary btn-sm">+ Nova Obra</a>
+      </div>
+    </div>
+
+    <!-- Estatísticas -->
+    <div class="stat-grid" id="stats-grid">
+      <div class="skeleton" style="height:5rem;"></div>
+      <div class="skeleton" style="height:5rem;"></div>
+      <div class="skeleton" style="height:5rem;"></div>
+    </div>
+
+    <!-- Lista de obras -->
+    <div class="card">
+      <div class="card__header"><p class="card__title">Minhas Obras</p></div>
+      <div class="card__content" id="books-list">
+        <p class="text-muted">Carregando...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <!-- ===================== MODAL: Capítulos do livro ===================== -->
+  <div class="modal-overlay" id="chapters-modal">
+    <div class="modal-box">
+      <h3 id="chapters-modal-title">Capítulos</h3>
+      <div id="chapters-existing" style="max-height:10rem; overflow-y:auto; margin-bottom:1rem;"></div>
+
+      <div style="border-top:1px solid var(--border); padding-top:1rem;">
+        <p style="font-size:.875rem; font-weight:500; margin-bottom:.75rem;">Adicionar Capítulo</p>
+        <div class="field">
+          <label style="font-size:.75rem;">Título</label>
+          <input type="text" id="new-chapter-titulo" placeholder="Título do capítulo">
+        </div>
+        <div class="field">
+          <label style="font-size:.75rem;">Conteúdo</label>
+          <textarea id="new-chapter-conteudo" rows="6" placeholder="Escreva o conteúdo do capítulo..."></textarea>
+        </div>
+        <div class="flex gap-4 mb-4" style="align-items:flex-end;">
+          <div class="field" style="flex:1; margin-bottom:0;">
+            <label style="font-size:.75rem;">Preço (MZN)</label>
+            <input type="number" id="new-chapter-preco" step="0.01" min="0" value="0">
+          </div>
+          <div class="flex gap-2" style="align-items:center; padding-bottom:.5rem;">
+            <input type="checkbox" id="new-chapter-gratis">
+            <label for="new-chapter-gratis" style="font-size:.75rem;">Grátis</label>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" id="add-chapter-btn">+ Adicionar Capítulo</button>
+      </div>
+
+      <button class="btn btn-outline btn-block mt-4" onclick="closeModal('chapters-modal')">Fechar</button>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: Editar obra ===================== -->
+  <div class="modal-overlay" id="edit-book-modal">
+    <div class="modal-box">
+      <h3>Editar Obra</h3>
+      <div class="field">
+        <label>Título</label>
+        <input type="text" id="edit-titulo">
+      </div>
+      <div class="field">
+        <label>Sinopse</label>
+        <textarea id="edit-sinopse" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label>URL da Capa</label>
+        <input type="url" id="edit-capa-url" placeholder="https://exemplo.com/capa.jpg">
+        <img id="edit-cover-preview" class="hidden" style="margin-top:.5rem; width:5rem; aspect-ratio:3/4; object-fit:cover; border-radius:var(--radius-md); border:1px solid var(--border);">
+      </div>
+      <div class="field">
+        <label>Preço do Livro Completo (MZN)</label>
+        <input type="number" id="edit-preco-total" step="0.01" min="0">
+        <p class="field-hint">0 = apenas venda por capítulo avulso</p>
+      </div>
+      <button class="btn btn-primary btn-block" id="save-edit-book-btn">Salvar Alterações</button>
+      <button class="btn btn-outline btn-block mt-4" onclick="closeModal('edit-book-modal')">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: Perfil do autor ===================== -->
+  <div class="modal-overlay" id="profile-modal">
+    <div class="modal-box">
+      <h3>Meu Perfil de Autor</h3>
+      <div class="field">
+        <label>Biografia</label>
+        <textarea id="profile-bio" rows="4" maxlength="500" placeholder="Escreva algo sobre você e sua obra literária..."></textarea>
+        <p class="field-hint" id="bio-char-count">0/500 caracteres</p>
+      </div>
+      <div class="field">
+        <label>URL do Avatar</label>
+        <input type="url" id="profile-avatar-url" placeholder="https://exemplo.com/avatar.jpg">
+        <img id="profile-avatar-preview" class="hidden" style="margin-top:.5rem; width:4rem; height:4rem; border-radius:999px; object-fit:cover; border:2px solid var(--amber-200);">
+      </div>
+      <button class="btn btn-primary btn-block" id="save-profile-btn">Salvar Perfil</button>
+      <button class="btn btn-outline btn-block mt-4" onclick="closeModal('profile-modal')">Cancelar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/painel-autor.js"></script>
+</body>
+</html>

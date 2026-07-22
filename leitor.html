@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leitura — MozLit</title>
+  <link rel="icon" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header" id="site-header"></header>
+
+  <!-- Marca d'água (preenchida via JS com o nome do leitor) -->
+  <div class="watermark-overlay" id="watermark" aria-hidden="true"></div>
+
+  <div id="reader-root">
+    <div class="reader-article">
+      <div class="skeleton" style="height:2rem; width:60%; margin-bottom:1rem;"></div>
+      <div class="skeleton" style="height:1rem; width:100%; margin-bottom:.5rem;"></div>
+      <div class="skeleton" style="height:1rem; width:90%; margin-bottom:.5rem;"></div>
+      <div class="skeleton" style="height:1rem; width:100%;"></div>
+    </div>
+  </div>
+
+  <!-- Comentários -->
+  <section class="comments-section hidden" id="comments-root"></section>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/comments.js"></script>
+  <script src="assets/js/leitor.js"></script>
+</body>
+</html>
